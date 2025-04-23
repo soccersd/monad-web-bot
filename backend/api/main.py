@@ -448,7 +448,7 @@ async def run_stake_cycle_task(
                         stake_result = await stake_fn(
                             private_key=pk,
                             amount_wei=amount_to_stake_wei,
-                            rpc_urls=w3.provider.endpoint_uri # Use connected URL
+                            rpc_url=w3.provider.endpoint_uri # Changed from rpc_urls to rpc_url
                             # Pass other relevant args like explorer_url if needed
                         )
                     except Exception as e:
@@ -1994,7 +1994,7 @@ async def run_multi_step_task(
                         step_result = await stake_fn(
                             private_key=pk,
                             amount_wei=amount_wei, # Assuming amount is passed as wei
-                            rpc_urls=rpc_to_use, # Pass correct RPC
+                            rpc_url=rpc_to_use, # Changed from rpc_urls to rpc_url for compatibility
                             # Pass other relevant config from config_data if needed
                             # e.g., cycles=config_data.get('cycles', 1) if execute_fn supports it
                         )
