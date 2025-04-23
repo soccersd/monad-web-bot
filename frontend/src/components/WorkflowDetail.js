@@ -110,6 +110,64 @@ function StepConfigEditor({ workflowId, step, onConfigChange, onCancel }) {
                          {/* Add slippage, recipient etc. if needed */}
                      </>
                  );
+            case 'send': // Add send configuration
+                return (
+                    <>
+                        <div className="form-group">
+                            <label htmlFor={`amount_mon_${step.step_id}`}>Amount:</label>
+                            <input
+                                type="text"
+                                id={`amount_mon_${step.step_id}`}
+                                name="amount_mon"
+                                value={localConfig.amount_mon || ''}
+                                onChange={handleInputChange}
+                                placeholder="e.g., 0.001"
+                            />
+                            <span className="input-suffix">MON</span>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor={`mode_${step.step_id}`}>Mode:</label>
+                            <select
+                                id={`mode_${step.step_id}`}
+                                name="mode"
+                                value={localConfig.mode || 'single'}
+                                onChange={handleInputChange}
+                            >
+                                <option value="single">Single Recipient</option>
+                                <option value="random">Random Recipients</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor={`recipient_address_${step.step_id}`}>Recipient Address:</label>
+                            <input
+                                type="text"
+                                id={`recipient_address_${step.step_id}`}
+                                name="recipient_address"
+                                value={localConfig.recipient_address || ''}
+                                onChange={handleInputChange}
+                                placeholder="0x..."
+                                disabled={localConfig.mode === 'random'}
+                            />
+                        </div>
+                    </>
+                );
+            case 'lilchogstars': // Add lilchogstars configuration
+                return (
+                    <>
+                        <div className="form-group">
+                            <label htmlFor={`quantity_${step.step_id}`}>Quantity:</label>
+                            <input
+                                type="number"
+                                id={`quantity_${step.step_id}`}
+                                name="quantity"
+                                value={localConfig.quantity || 1}
+                                onChange={handleInputChange}
+                                placeholder="e.g., 1"
+                                min="1"
+                            />
+                        </div>
+                    </>
+                );
             // Add cases for other step types (deploy, send, etc.)
             default:
                 return <p>No configuration available for step type: {step.type}</p>;
@@ -645,7 +703,7 @@ function WorkflowDetail() {
                            step.type === 'deploy' ? '🚀' :
                            step.type === 'send' ? '📤' :
                            step.type === 'bebop' || step.type === 'izumi' ? '🔄' :
-                           step.type === 'lilchogstars mint' ? '🎨' :
+                           step.type === 'lilchogstars' ? '🎨' :
                            step.type === 'mono' ? '💸' :
                            step.type === 'rubic' ? '💱' :
                            step.type === 'ambient' ? '💹' :

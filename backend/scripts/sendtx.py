@@ -9,7 +9,7 @@ init(autoreset=True)
 # Constants
 DEFAULT_RPC_URL = "https://testnet-rpc.monad.xyz/"
 DEFAULT_EXPLORER_URL = "https://testnet.monadexplorer.com/tx/0x"
-DEFAULT_GAS_LIMIT_SEND = 21000 # Standard gas limit for ETH transfer
+DEFAULT_GAS_LIMIT_SEND = 40000 # Increased from 21000 for more complex operations
 
 # --- Helper Functions --- (Copied)
 def connect_to_rpc(rpc_url):
@@ -53,8 +53,16 @@ async def execute_send_mon(
         balance = await asyncio.to_thread(w3.eth.get_balance, account.address)
         logs.append(format_step('send', f"Balance: {w3.from_wei(balance, 'ether')} MON"))
 
-        # Estimate gas price
-        gas_price = await asyncio.to_thread(w3.eth.gas_price)
+        # Estimate gas price - handle both property and callable cases
+        try:
+            if callable(w3.eth.gas_price):
+                gas_price = await asyncio.to_thread(lambda: w3.eth.gas_price())
+            else:
+                gas_price = w3.eth.gas_price
+        except Exception as gas_err:
+            logs.append(format_step('send', f"Error getting gas price: {gas_err}. Using default."))
+            gas_price = w3.to_wei('50', 'gwei')
+            
         estimated_cost = gas_limit * gas_price
 
         if balance < (amount_wei + estimated_cost):
@@ -94,7 +102,22 @@ async def execute_send_mon(
             }
         else:
             logs.append(format_step('send', f"✘ Transaction failed: Status {receipt.status}"))
-            raise Exception(f"Transaction failed: Status {receipt.status}")
+            # Try to get more information about the failure if possible
+            try:
+                # Try to simulate the transaction to see if we can get a revert reason
+                tx_params = {
+                    'from': account.address,
+                    'to': recipient_checksum,
+                    'value': amount_wei
+                }
+                w3.eth.call(tx_params)
+                # If we reach here, it means no revert reason was provided
+                error_message = f"Transaction failed on-chain with status 0, but no revert reason available"
+            except Exception as call_err:
+                # If eth_call fails, we might get a revert reason
+                error_message = f"Transaction failed: {str(call_err)}"
+            
+            raise Exception(error_message)
 
     except ValueError as ve:
          error_message = str(ve)

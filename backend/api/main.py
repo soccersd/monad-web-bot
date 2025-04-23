@@ -40,7 +40,7 @@ except ImportError as e_deploy:
     import_errors['deploy'] = str(e_deploy)
 
 try:
-    from sendtx import execute_send_mon, send_random_wei
+    from sendtx import execute_send_mon, get_random_amount_wei
 except ImportError as e_sendtx:
     import_errors['sendtx'] = str(e_sendtx)
 
@@ -128,6 +128,7 @@ if 'deploy' in import_errors:
 if 'sendtx' in import_errors:
     print(f"Warning: Failed to import sendtx.py: {import_errors['sendtx']}. Using dummy functions.")
     execute_send_mon = create_dummy_func('send_mon', import_errors['sendtx'])
+    get_random_amount_wei = create_dummy_func('get_random_amount_wei', import_errors['sendtx'])
     # Define other sendtx dummies if needed
 
 # --- NEW: Assign Bebop Dummy --- #
@@ -590,7 +591,7 @@ async def run_swap_task(
                     token_from_symbol=request.token_from_symbol,
                     token_to_symbol=request.token_to_symbol,
                     amount_str=request.amount_str,
-                    rpc_urls=w3.provider.endpoint_uri
+                    rpc_url=w3.provider.endpoint_uri
                     # Pass other needed params
                 )
 
@@ -678,11 +679,12 @@ async def run_deploy_task(
                 cycle_prefix = f"{key_prefix} [Deployment {cycle+1}/{request.cycles}]"
                 update_task_log(task_id, f"{cycle_prefix} Attempting deploy {request.contract_name} ({request.contract_symbol})...")
 
-                deploy_result = await execute_deploy_counter( # Assuming this is the deploy script
+                deploy_result = await execute_deploy_counter(
                     private_key=pk,
-                    rpc_urls=w3.provider.endpoint_uri,
                     contract_name=request.contract_name,
-                    contract_symbol=request.contract_symbol
+                    contract_symbol=request.contract_symbol,
+                    rpc_url=w3.provider.endpoint_uri,
+                    # Add more parameters as needed
                 )
 
                 # Process logs from deploy_result first
@@ -793,11 +795,11 @@ async def run_send_task(
 
                 recipient = request.recipient_address # Use specified if in single mode
                 if request.mode == 'random':
-                    # Generate random recipient - HOW? Need a helper or logic here
-                    # recipient = generate_random_address() # Placeholder
-                    update_task_log(task_id, f"{tx_prefix} Random recipient mode not implemented yet.", level='warning')
-                    recipient = None # Or break/continue
-
+                    # Generate random recipient using a hardcoded address for now
+                    # Later we can implement proper random address generation
+                    recipient = "0x052135aBEc9A037C15554dEC1ca60a5B5aD88e52" # Use a normal EOA address instead of contract
+                    update_task_log(task_id, f"{tx_prefix} Using hardcoded address for random mode: {recipient}")
+                
                 if not recipient:
                     update_task_log(task_id, f"{tx_prefix} No recipient address available. Skipping send.", level='error')
                     overall_success = False
@@ -810,7 +812,7 @@ async def run_send_task(
                     private_key=pk,
                     recipient_address=recipient,
                     amount_wei=amount_to_send_wei,
-                    rpc_urls=w3.provider.endpoint_uri
+                    rpc_url=w3.provider.endpoint_uri
                 )
 
                 for log_line in send_result.get('logs', []):
@@ -879,7 +881,7 @@ async def run_bebop_task(
             result = await execute_bebop_wrap_unwrap(
                 private_key=pk,
                 amount_mon=request.amount_mon,
-                rpc_urls=request.rpc_url # Pass RPC from request if provided
+                rpc_url=request.rpc_url # Pass RPC from request if provided
             )
 
             # Log messages returned from the script
@@ -1306,7 +1308,7 @@ async def run_bean_task(
                 direction=request.direction,
                 token_symbol=request.token_symbol,
                 amount=request.amount,
-                rpc_urls=rpc_list
+                rpc_url=rpc_list  # Changed from rpc_urls to rpc_url
             )
 
             for log_msg in result.get('logs', []):
@@ -2025,7 +2027,7 @@ async def run_multi_step_task(
                         raise ValueError("Missing required config for deploy step: contract_name, contract_symbol")
                     step_result = await execute_deploy_counter(
                         private_key=pk,
-                        rpc_urls=rpc_to_use,
+                        rpc_url=rpc_to_use,
                         contract_name=name,
                         contract_symbol=symbol
                         # Add cycles if supported
@@ -2038,9 +2040,9 @@ async def run_multi_step_task(
                     if amount_mon is None or (mode == 'single' and not recipient):
                         raise ValueError("Missing required config for send step")
                     if mode == 'random':
-                        # Implement random recipient generation if needed
-                        update_task_log(task_id, f"{step_prefix} Random recipient mode not implemented in multi-step yet.", level='warning')
-                        recipient = None # Placeholder - skip this step?
+                        # Use a hardcoded address for random mode (same as in run_send_task)
+                        recipient = "0x052135aBEc9A037C15554dEC1ca60a5B5aD88e52" # Use normal EOA address
+                        update_task_log(task_id, f"{step_prefix} Using hardcoded address for random mode: {recipient}")
 
                     if recipient:
                          amount_wei = w3.to_wei(amount_mon, 'ether')
@@ -2048,7 +2050,7 @@ async def run_multi_step_task(
                             private_key=pk,
                             recipient_address=recipient,
                             amount_wei=amount_wei,
-                            rpc_urls=rpc_to_use
+                            rpc_url=rpc_to_use # ได้แก้ไขจาก rpc_urls เป็น rpc_url แล้วเมื่อตะกี้
                             # Add tx_count if supported
                          )
                     else:
@@ -2057,7 +2059,7 @@ async def run_multi_step_task(
                 elif step.type == 'bebop':
                      amount = config_data.get('amount_mon')
                      if amount is None: raise ValueError("Missing amount_mon for bebop step")
-                     step_result = await execute_bebop_wrap_unwrap(private_key=pk, amount_mon=amount, rpc_urls=rpc_to_use)
+                     step_result = await execute_bebop_wrap_unwrap(private_key=pk, amount_mon=amount, rpc_url=rpc_to_use)
 
                 elif step.type == 'izumi':
                      amount = config_data.get('amount_mon')
@@ -2105,7 +2107,7 @@ async def run_multi_step_task(
                          direction=direction,
                          token_symbol=symbol,
                          amount=amount,
-                         rpc_urls=rpc_list
+                         rpc_url=rpc_list  # Changed from rpc_urls to rpc_url
                      )
 
                 elif step.type == 'bima':
