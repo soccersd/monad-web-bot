@@ -1,0 +1,28 @@
+.sidebar {
+  width: 280px;
+  background-color: var(--color-surface);
+  height: 100vh;
+  overflow-y: auto;
+  border-right: var(--border-width) solid var(--color-border);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.app-title {
+  /* Remove padding/margin if handled by flex gap */
+  /* padding-bottom: 20px; */
+  /* margin-bottom: 10px; */
+}
+
+.app-title h1 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Further refinements will be in WorkflowList.css and WalletList.css */ 

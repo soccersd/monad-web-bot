@@ -1,0 +1,51 @@
+/* frontend/src/App.css */
+
+/* Remove base body styles if moved to index.css */
+/* body { ... } */
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* Keep column direction if header/footer planned */
+}
+
+.app-container {
+  display: flex;
+  flex: 1; /* Allow container to fill remaining height */
+  /* height: 100vh; Remove fixed height to allow content growth */
+  /* Consider adding max-width and centering for larger screens if desired */
+  /* max-width: 1600px; */
+  /* margin: 0 auto; */
+}
+
+/* Basic styling for Sidebar and Main Content within the container */
+/* Specifics will be in their own CSS files, but basic layout here */
+
+.sidebar {
+  /* Width defined in Sidebar.css */
+  /* Background defined in Sidebar.css */
+  /* Border defined in Sidebar.css */
+  height: 100vh; /* Make sidebar full height */
+  position: sticky; /* Keep sidebar visible on scroll */
+  top: 0;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  overflow-y: auto; /* Allow scrolling within sidebar if content overflows */
+}
+
+.main-content {
+  flex-grow: 1; /* Allow main content to take remaining space */
+  padding: 2rem; /* Add consistent padding around main content */
+  overflow-y: auto; /* Allow main content area to scroll */
+  background-color: var(--color-background); /* Use global background */
+}
+
+/* Example of using CSS variables */
+h1, h2, h3 {
+  color: var(--color-text-primary);
+}
+
+p {
+  color: var(--color-text-secondary);
+}
+
+/* Add other app-wide utility classes or styles if needed */

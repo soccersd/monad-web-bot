@@ -1,0 +1,285 @@
+.logs-page {
+    /* padding: 20px; Remove padding if handled by main-content */
+    /* max-width: 1200px; Allow full width within main-content */
+    /* margin: 0 auto; */
+    height: 100%; /* Allow page to fill main-content height */
+    display: flex;
+    flex-direction: column;
+}
+
+.logs-page > h2 { /* Style the main page title */
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.logs-container {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Adjust column width ratio if needed */
+    gap: 1.5rem; /* Consistent gap */
+    /* margin-top: 20px; Remove top margin */
+    /* height: calc(100vh - 150px); Let flex handle height */
+    /* min-height: 500px; */
+    flex-grow: 1; /* Allow container to fill space */
+    overflow: hidden; /* Prevent container itself from scrolling */
+}
+
+.task-list, .task-details {
+    background-color: var(--color-surface); /* Use surface color */
+    border-radius: var(--border-radius);
+    padding: 1rem 1.25rem; /* Adjust padding */
+    overflow: hidden; /* Keep hidden */
+    display: flex;
+    flex-direction: column;
+    border: var(--border-width) solid var(--color-border); /* Use standard border */
+    box-shadow: var(--shadow-sm); /* Use standard shadow */
+}
+
+.task-list {
+    /* max-height: 100%; */
+    overflow-y: auto; /* Allow only list content to scroll */
+}
+
+.task-list h3, .task-details h3 {
+    margin-top: 0;
+    font-size: 1rem; /* Adjust size */
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.task-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Allow list to take space before potential footer */
+    overflow-y: auto; /* Ensure list itself can scroll if needed */
+}
+
+.task-item {
+    padding: 0.75rem 1rem; /* Adjust padding */
+    margin-bottom: 0.5rem; /* Adjust spacing */
+    border-radius: var(--border-radius);
+    background-color: transparent; /* Transparent background */
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    border: none; /* Remove border */
+    border-left: 3px solid transparent; /* Keep space for selected indicator */
+}
+
+.task-item:hover {
+    background-color: rgba(0, 0, 0, 0.03); /* Subtle hover */
+    /* transform: translateY(-2px); Remove transform */
+    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); Remove shadow */
+}
+
+.task-item.selected {
+    background-color: var(--color-primary-light);
+    border-left-color: var(--color-primary); /* Use primary color border */
+}
+
+.task-summary {
+    display: flex; /* Use flex for better alignment */
+    flex-direction: row; /* Arrange items horizontally */
+    justify-content: space-between; /* Space out items */
+    align-items: center;
+    gap: 0.75rem; /* Adjust gap */
+}
+
+/* Consistent Status Badge Style */
+.task-status {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    min-width: 80px; /* Ensure some minimum width */
+    white-space: nowrap;
+}
+
+/* Define status colors using variables or specific values */
+.status-running {
+    background-color: #cfe2ff; /* Lighter blue */
+    color: #0a58ca;
+}
+.status-completed {
+    background-color: #d1e7dd; /* Lighter green */
+    color: #146c43;
+}
+.status-failed {
+    background-color: var(--color-danger-light); /* Use variable */
+    color: var(--color-danger);
+}
+.status-pending,
+.status-stopping { /* Style stopping similar to pending */
+    background-color: #e9ecef; /* Light gray */
+    color: var(--color-text-secondary);
+}
+
+.task-type {
+    font-weight: 500; /* Normal weight */
+    color: var(--color-text-primary);
+    flex-grow: 1; /* Allow type/desc to take space */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left; /* Align left */
+}
+
+.task-time {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    white-space: nowrap; /* Prevent time from wrapping */
+}
+
+.task-details {
+    overflow-y: auto; /* Allow details content to scroll */
+}
+
+.error-message {
+    /* Reuse style from WalletList */
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: var(--border-width) solid var(--color-danger);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+}
+
+.loading,
+.no-selection {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    flex-grow: 1; /* Center vertically if possible */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-task {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Fill available space */
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.task-id {
+    font-weight: 500;
+    font-family: monospace;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* Task Header Status (use same class as list) */
+.task-header .task-status {
+   /* Inherits styles from .task-status */
+}
+
+.task-info {
+    background-color: var(--color-background); /* Use main background for info block */
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-size: var(--font-size-sm);
+    border: var(--border-width) solid var(--color-border);
+}
+
+.task-info div {
+    margin-bottom: 0.5rem;
+}
+.task-info div:last-child {
+    margin-bottom: 0;
+}
+.task-info strong {
+    color: var(--color-text-primary);
+    min-width: 90px; /* Align keys */
+    display: inline-block;
+}
+
+.logs-section {
+    flex: 1; /* Allow logs to take remaining space */
+    display: flex;
+    flex-direction: column;
+    margin-top: 0; /* Remove top margin if section handles spacing */
+    overflow: hidden; /* Hide overflow here */
+}
+
+.logs-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.logs-content {
+    background-color: #f1f3f5; /* Lighter background than dark */
+    color: var(--color-text-primary); /* Standard text color */
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    font-family: monospace;
+    font-size: 0.875rem; /* Small monospace */
+    overflow-y: auto; /* Enable scrolling */
+    flex-grow: 1; /* Take available space */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+    border: var(--border-width) solid var(--color-border);
+}
+
+.log-entry {
+    margin-bottom: 0.3rem; /* Adjust spacing */
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    line-height: 1.4; /* Improve readability */
+}
+
+.log-time {
+    color: var(--color-text-secondary);
+    font-size: 0.8em; /* Smaller timestamp */
+    /* min-width: 140px; Remove fixed width */
+    white-space: nowrap;
+}
+
+.log-message {
+    flex-grow: 1;
+}
+
+/* Simplify log level styling */
+.log-warning .log-message { color: #fd7e14; } /* Orange/Yellow */
+.log-error .log-message { color: var(--color-danger); }
+.log-debug .log-message { color: #6c757d; } /* Gray */
+
+
+/* Remove duplicated/unused styles */
+.task-list-section,
+.task-details-section,
+.task-desc, /* Replaced by task-type */
+.details-content,
+.logs-output, /* Replaced by logs-section */
+.logs-output h3,
+.logs-output pre,
+.log-level,
+.log-info .log-level,
+.log-warning .log-level,
+.log-error .log-level,
+.log-debug .log-level,
+.logs-output pre div[ref] {
+  display: none; /* Hide unused styles */
+} 

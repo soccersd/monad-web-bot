@@ -1,0 +1,91 @@
+.usage-stats {
+  margin-bottom: 30px;
+}
+
+.usage-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  background: #f9f9f9;
+}
+
+.tab-btn.active {
+  background: #ffb6c1;
+  color: white;
+  border-color: #ffb6c1;
+}
+
+.stats-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.stat-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.stat-subtitle {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.stat-details {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.stat-progress {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ffb6c1;
+  border-radius: 4px;
+}
+
+.loading-indicator {
+  text-align: center;
+  margin: 10px 0;
+  color: #777;
+  font-size: 0.9rem;
+  font-style: italic;
+} 

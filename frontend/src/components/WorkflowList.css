@@ -1,0 +1,141 @@
+.workflows-container {
+  /* margin-bottom: 30px; Remove margin if gap handled by sidebar flex */
+}
+
+.workflows-header {
+  /* display: flex; */ /* Already flex by default? Keep if needed */
+  /* justify-content: space-between; */ /* Not needed if just h2 */
+  /* align-items: center; */
+  margin-bottom: 0.75rem; /* Adjust spacing */
+  padding-left: 0.5rem; /* Indent header slightly */
+}
+
+.workflows-header h2 {
+  font-size: 0.875rem; /* Smaller header (sm) */
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-secondary); /* Use secondary text color */
+  text-transform: uppercase; /* Uppercase for section header */
+  letter-spacing: 0.05em; /* Add slight letter spacing */
+}
+
+.workflow-list {
+  /* margin-bottom: 15px; Remove margin if gap handled by sidebar flex */
+}
+
+.workflow-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.75rem; /* Adjust padding */
+  margin-bottom: 0.25rem; /* Reduce margin */
+  border-radius: var(--border-radius);
+  background: transparent; /* Transparent background initially */
+  border: var(--border-width) solid transparent; /* Use transparent border for layout */
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  position: relative; /* For potential pseudo-elements like selected border */
+}
+
+.workflow-item:hover {
+  background: rgba(0, 0, 0, 0.03); /* Very subtle hover */
+}
+
+.workflow-item.selected {
+  background: var(--color-primary-light);
+  /* border-color: var(--color-primary); */ /* Optional: Border color change */
+  font-weight: 500; /* Make text slightly bolder */
+}
+
+/* Optional: Add a left border for selected item */
+/* .workflow-item.selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  bottom: 5px;
+  width: 3px;
+  background-color: var(--color-primary);
+  border-radius: 0 3px 3px 0;
+} */
+
+.workflow-name {
+  font-size: var(--font-size-sm); /* Use sm font size */
+  font-weight: 400; /* Regular weight */
+  color: var(--color-text-primary); /* Use primary text color */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* max-width: 160px; Remove fixed max-width, let flexbox handle it */
+  flex-grow: 1; /* Allow name to take space */
+  margin-right: 0.5rem; /* Space before actions */
+}
+
+.workflow-item.selected .workflow-name {
+   font-weight: 500; /* Bolder when selected */
+}
+
+.workflow-actions {
+  display: flex;
+  gap: 0.25rem; /* Smaller gap */
+  opacity: 0; /* Hide actions by default */
+  transition: opacity 0.15s ease-in-out;
+}
+
+.workflow-item:hover .workflow-actions,
+.workflow-item.selected .workflow-actions { /* Show on hover or when selected */
+  opacity: 1;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  font-size: 0.9rem; /* Adjust size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.action-btn:hover {
+  background: rgba(0, 0, 0, 0.07); /* Slightly darker hover */
+  color: var(--color-text-primary);
+}
+
+.add-workflow {
+  margin-top: 1rem; /* Adjust spacing */
+}
+
+/* Make Add Workflow button consistent */
+.add-workflow-btn {
+  width: 100%;
+  padding: 0.6rem 1rem; /* Adjust padding */
+  background: transparent; /* Make it less prominent */
+  border: var(--border-width) solid var(--color-border); /* Use standard border */
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  color: var(--color-text-secondary); /* Use secondary color */
+  font-size: var(--font-size-sm); /* Use small font size */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.add-workflow-btn:hover {
+  background: rgba(0, 0, 0, 0.03); /* Subtle hover */
+  border-color: #adb5bd; /* Slightly darker border */
+  color: var(--color-text-primary);
+}
+
+.add-workflow-btn span {
+  font-size: 1.1rem; /* Keep '+' slightly larger */
+  font-weight: normal; /* Normal weight for '+' */
+  line-height: 1;
+} 

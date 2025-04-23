@@ -1,0 +1,272 @@
+.wallets-container {
+  /* padding: 15px; Remove padding if handled by sidebar flex */
+  /* border-right: 1px solid #e0e0e0; Remove border if sidebar has it */
+  /* background-color: #f8f9fa; Remove background if sidebar manages it */
+}
+
+.wallets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem; /* Match WorkflowList header */
+  padding-left: 0.5rem; /* Match WorkflowList header */
+}
+
+.wallets-header h2 {
+  margin: 0;
+  font-size: 0.875rem; /* Match WorkflowList header */
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Secondary Button Style for Refresh */
+.refresh-btn {
+  background-color: transparent;
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 0.3rem 0.75rem; /* Adjust padding */
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: #adb5bd;
+  color: var(--color-text-primary);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.wallet-error {
+  background-color: var(--color-danger-light); /* Use variable */
+  color: var(--color-danger); /* Use variable */
+  padding: 0.75rem 1rem; /* Adjust padding */
+  margin-bottom: 1rem;
+  border: var(--border-width) solid var(--color-danger); /* Use variable */
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+}
+
+/* Import Wallet Form Styling */
+.import-wallet-form {
+  background-color: var(--color-surface);
+  padding: 1rem; /* Adjust padding */
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem; /* Increase spacing */
+  border: var(--border-width) solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.import-wallet-form h3 {
+  margin-top: 0;
+  margin-bottom: 1rem; /* Adjust spacing */
+  font-size: 1rem; /* Base font size */
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Use existing form-group styles from WorkflowDetail.css if defined globally,
+   otherwise, redefine here matching those styles */
+.import-wallet-form .form-group {
+  margin-bottom: 1rem; /* Consistent spacing */
+}
+
+.import-wallet-form .form-group label {
+  display: block;
+  margin-bottom: 0.375rem; /* 6px */
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary); /* Darker label */
+}
+
+.import-wallet-form .form-group input {
+  width: 100%;
+  padding: 0.6rem 0.75rem; /* Match inputs elsewhere */
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm); /* Use smaller font for inputs */
+  line-height: 1.5;
+  background-color: var(--color-surface); /* Ensure background is white */
+  color: var(--color-text-primary);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.import-wallet-form .form-group input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.import-wallet-form .form-group input:focus {
+  border-color: var(--color-primary); /* Use primary color */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 182, 193, 0.25); /* Match focus style with light pink */
+}
+
+/* Style Import Button like primary action */
+.import-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem; /* Consistent padding */
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.import-btn:hover:not(:disabled) {
+  background-color: #ff9daa; /* Darker pink */
+}
+
+.import-btn:disabled {
+  background-color: var(--color-text-secondary);
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Wallet List Styling */
+.wallet-list-container { /* Add a container if needed */
+    margin-top: 1.5rem;
+}
+
+.wallet-list-container h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.wallet-list {
+   /* Remove border/background if items handle it */
+}
+
+.wallet-list-header {
+  display: grid;
+  /* Adjust columns based on content (Checkbox, Nickname, Address (flex), Balance) */
+  grid-template-columns: auto auto 1fr auto;
+  gap: 0.75rem; /* Adjust gap */
+  padding: 0.5rem 0.75rem; /* Adjust padding */
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  border-bottom: var(--border-width) solid var(--color-border);
+  margin-bottom: 0.5rem;
+}
+
+.wallet-checkbox-header {
+  /* text-align: center; */ /* Align left might be cleaner */
+}
+
+.wallet-balance-header {
+  text-align: right;
+}
+
+.wallet-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto; /* Match header */
+  gap: 0.75rem; /* Match header */
+  align-items: center;
+  padding: 0.6rem 0.75rem; /* Adjust padding */
+  margin-bottom: 0.25rem; /* Reduce margin */
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+  border: var(--border-width) solid transparent; /* Transparent border for spacing */
+  font-size: var(--font-size-sm);
+  transition: background-color 0.15s ease;
+}
+
+.wallet-item:hover {
+  background-color: var(--color-primary-light); /* Use light primary for hover */
+}
+
+.wallet-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center checkbox */
+}
+
+/* Improve checkbox appearance */
+.wallet-checkbox input[type="checkbox"] {
+  cursor: pointer;
+  margin: 0; /* Remove default margin */
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.wallet-checkbox input[type="checkbox"]:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.wallet-checkbox input[type="checkbox"]:checked::after {
+  content: '\2713'; /* Checkmark symbol */
+  font-size: 12px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wallet-checkbox input[type="checkbox"]:focus {
+  outline: 0;
+   box-shadow: 0 0 0 0.2rem rgba(131, 89, 212, 0.25);
+}
+
+.wallet-checkbox label {
+   display: none; /* Hide label if not needed */
+}
+
+.wallet-nickname {
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* max-width: 100px; Let grid handle width */
+}
+
+.wallet-address {
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-secondary);
+  font-size: 0.85em; /* Smaller address */
+}
+
+.wallet-balance {
+  text-align: right;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.wallet-balance.zero-balance {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+/* Remove old manage-btn if not used */
+.manage-btn { display: none; } 
