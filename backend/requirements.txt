@@ -5,4 +5,8 @@ python-dotenv
 aiohttp
 requests
 py-solc-x
-colorama 
+colorama
+gunicorn
+eth_abi
+loguru
+async_lru 
