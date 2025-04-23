@@ -2014,7 +2014,7 @@ async def run_multi_step_task(
                          token_from_symbol=from_sym,
                          token_to_symbol=to_sym,
                          amount_str=amount_str,
-                         rpc_urls=rpc_to_use
+                         rpc_url=rpc_to_use  # Changed from rpc_urls to rpc_url for compatibility
                          # Add mode/cycles if supported
                     )
 

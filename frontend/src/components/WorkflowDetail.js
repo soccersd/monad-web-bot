@@ -75,36 +75,36 @@ function StepConfigEditor({ workflowId, step, onConfigChange, onCancel }) {
                  return (
                      <>
                          <div className="form-group">
-                             <label htmlFor={`from_token_${step.step_id}`}>From Token:</label>
+                             <label htmlFor={`token_from_symbol_${step.step_id}`}>From Token:</label>
                              <input
                                  type="text"
-                                 id={`from_token_${step.step_id}`}
-                                 name="from_token"
-                                 value={localConfig.from_token || ''}
+                                 id={`token_from_symbol_${step.step_id}`}
+                                 name="token_from_symbol"
+                                 value={localConfig.token_from_symbol || ''}
                                  onChange={handleInputChange}
                                  placeholder="e.g., MON"
                              />
                          </div>
                          <div className="form-group">
-                             <label htmlFor={`to_token_${step.step_id}`}>To Token:</label>
+                             <label htmlFor={`token_to_symbol_${step.step_id}`}>To Token:</label>
                              <input
                                  type="text"
-                                 id={`to_token_${step.step_id}`}
-                                 name="to_token"
-                                 value={localConfig.to_token || ''}
+                                 id={`token_to_symbol_${step.step_id}`}
+                                 name="token_to_symbol"
+                                 value={localConfig.token_to_symbol || ''}
                                  onChange={handleInputChange}
                                  placeholder="e.g., USDC"
                              />
                          </div>
                          <div className="form-group">
-                             <label htmlFor={`amount_swap_${step.step_id}`}>Amount:</label>
+                             <label htmlFor={`amount_str_${step.step_id}`}>Amount:</label>
                              <input
                                  type="text"
-                                 id={`amount_swap_${step.step_id}`}
-                                 name="amount"
-                                 value={localConfig.amount || ''}
+                                 id={`amount_str_${step.step_id}`}
+                                 name="amount_str"
+                                 value={localConfig.amount_str || ''}
                                  onChange={handleInputChange}
-                                 placeholder="e.g., 100"
+                                 placeholder="e.g., 0.1"
                              />
                          </div>
                          {/* Add slippage, recipient etc. if needed */}
